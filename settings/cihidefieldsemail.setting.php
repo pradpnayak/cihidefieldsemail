@@ -13,7 +13,7 @@ return [
       'placeholder' => ts('Select field(s)')
     ],
     'pseudoconstant' => [
-      'callback' => '_cicustom_civicrm_getSettingFields'
+      'callback' => '_cihidefieldsemail_civicrm_getSettingFields'
     ],
     'settings_pages' => ['mailing' => ['weight' => 10]],
     'default' => NULL,

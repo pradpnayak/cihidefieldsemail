@@ -36,7 +36,7 @@ function cihidefieldsemail_civicrm_enable(): void {
  *
  * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_alterMailParams
  */
-function cicustom_civicrm_alterMailParams(&$params, $context) {
+function cihidefieldsemail_civicrm_alterMailParams(&$params, $context) {
   if ($context == 'messageTemplate' && !empty($params['workflow'])) {
     if ($params['workflow'] == 'event_online_receipt') {
       $tplParams = &$params['tplParams'];
@@ -53,11 +53,11 @@ function cicustom_civicrm_alterMailParams(&$params, $context) {
             if (empty($pfId)) {
               continue;
             }
-            _cicustom_civicrm_unsetData($tplParams[$vKey], $pfId);
+            _cihidefieldsemail_civicrm_unsetData($tplParams[$vKey], $pfId);
           }
         }
         else {
-          _cicustom_civicrm_unsetData($tplParams[$vKey], $tplParams[$key]);
+          _cihidefieldsemail_civicrm_unsetData($tplParams[$vKey], $tplParams[$key]);
         }
       }
     }
@@ -70,12 +70,12 @@ function cicustom_civicrm_alterMailParams(&$params, $context) {
  * @param array $params
  * @param int $profileId
  */
-function _cicustom_civicrm_unsetData(array &$params, int $profileId) {
+function _cihidefieldsemail_civicrm_unsetData(array &$params, int $profileId) {
   $settings = \Civi::settings()->get('cihidefieldsemail');
   if (empty($settings)) {
     return;
   }
-  $fields = _cicustom_civicrm_getProfileFields($profileId);
+  $fields = _cihidefieldsemail_civicrm_getProfileFields($profileId);
   foreach ($fields as $key => $label) {
     if (in_array($key, $settings)) {
       foreach ($params as &$p) {
@@ -91,7 +91,7 @@ function _cicustom_civicrm_unsetData(array &$params, int $profileId) {
  *
  * @return array
  */
-function _cicustom_civicrm_getSettingFields(): array {
+function _cihidefieldsemail_civicrm_getSettingFields(): array {
   $results = \Civi\Api4\CustomField::get(TRUE)
     ->addSelect('id', 'label', 'custom_group_id:label')
     ->addWhere('is_active', '=', TRUE)
@@ -113,7 +113,7 @@ function _cicustom_civicrm_getSettingFields(): array {
  *
  * @return array
  */
-function _cicustom_civicrm_getProfileFields(int $profileId): array {
+function _cihidefieldsemail_civicrm_getProfileFields(int $profileId): array {
   static $fields = [];
   if (!empty($fields[$profileId])) {
     return $fields[$profileId];
